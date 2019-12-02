@@ -1,12 +1,7 @@
 import React, { Component } from 'react';
 import 'bootstrap/dist/css/bootstrap.min.css'
-import { 
-  Container,
-} from 'react-bootstrap';
 
-import Activities from './components/Activities/Activities';
-import ActivityForm from './components/ActivityForm/ActivityForm';
-import Summary from './components/Summary/Summary';
+import AppRoutes from './router';
 
 class App extends Component {
   state = {
@@ -25,11 +20,7 @@ class App extends Component {
   }
   render() {
     return (
-      <Container>
-        <ActivityForm />
-        <Activities activities={this.state.activities}/>
-        <Summary />
-      </Container>
+        <AppRoutes state={this.state}/>
     );
   }
 }

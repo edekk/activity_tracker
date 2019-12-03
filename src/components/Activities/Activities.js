@@ -4,6 +4,9 @@ import {
     Button,
     Alert
 } from 'react-bootstrap';
+import {
+    Link
+} from "react-router-dom";
 import Summary from '../Summary/Summary';
 import './Activities.css';
 
@@ -34,7 +37,9 @@ const activities = (props) => {
     if (props.activities.length === 0) {
         return(
             <Alert variant="primary">
-                Feel free to add some activities to your list
+                <p>Your activites list is empty.</p>
+                <p>Feel free to add some activities to your list.</p>
+                <Link to="/add-activity"><Button variant="primary">Add activity</Button></Link>
             </Alert>
         );
     } else {

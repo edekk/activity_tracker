@@ -6,38 +6,7 @@ import RandomId from './utilities/IdGenerator';
 
 class App extends Component {
   state = {
-    activities: [
-      {
-        start: '08:00',
-        end: '17:00',
-        description: 'scope',
-        id: RandomId()
-      },
-      {
-        start: '14:00',
-        end: '16:00',
-        description: 'first todo',
-        id: RandomId()
-      },
-      {
-        start: '10:49',
-        end: '19:49',
-        description: 'eqwrfeds',
-        id: RandomId()
-      },
-      {
-        start: '12:49',
-        end: '21:23',
-        description: 'qwonieqwo',
-        id: RandomId()
-      },
-      {
-        start: '22:49',
-        end: '23:23',
-        description: 'qwihueqw',
-        id: RandomId()
-      }
-    ]
+    activities: []
   }
 
   addActivityHandler = (newActivity) => {

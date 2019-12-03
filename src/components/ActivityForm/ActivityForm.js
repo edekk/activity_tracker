@@ -65,7 +65,8 @@ const ActivityForm = (props) => {
                         <TimePicker 
                             defaultValue={moment()} 
                             showSecond={false}
-                            name="start" />
+                            name="start"
+                            autocomplete="off" />
                     </Form.Group>
                 </Col>
                 <Col>
@@ -74,7 +75,8 @@ const ActivityForm = (props) => {
                         <TimePicker 
                         defaultValue={moment()} 
                         showSecond={false}
-                        name="end" />
+                        name="end"
+                        autocomplete="off" />
                     </Form.Group>
                 </Col>
             </Row>

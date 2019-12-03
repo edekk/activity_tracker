@@ -18,6 +18,24 @@ class App extends Component {
         end: '16:00',
         description: 'first todo',
         id: RandomId()
+      },
+      {
+        start: '10:49',
+        end: '19:49',
+        description: 'eqwrfeds',
+        id: RandomId()
+      },
+      {
+        start: '12:49',
+        end: '21:23',
+        description: 'qwonieqwo',
+        id: RandomId()
+      },
+      {
+        start: '22:49',
+        end: '23:23',
+        description: 'qwihueqw',
+        id: RandomId()
       }
     ]
   }

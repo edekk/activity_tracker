@@ -12,7 +12,25 @@ const removeActivity = (index, remove) => {
     }
 }
 
+const sortActivities = (activities) => {
+    const compare = (a, b) => {
+        const startA = a.start;
+        const startB = b.start;
+
+        let comparasion = 0;
+        if (startA > startB) {
+            comparasion = 1;
+        } else if (startA < startB) {
+            comparasion = -1;
+        }
+        return comparasion;
+    }
+    activities.sort(compare);
+}
+
 const activities = (props) => {
+
+    sortActivities(props.activities);
     return (
         <>
             <Table className="ActivitiesTable">

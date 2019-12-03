@@ -13,7 +13,7 @@ import moment from 'moment';
 import 'rc-time-picker/assets/index.css';
 //
 
-import Miliseconds from '../../utilities/MilisecondsConverter';
+import { StringToMs as Miliseconds } from '../../utilities/TimeConverter';
 
 
 const ActivityForm = (props) => {

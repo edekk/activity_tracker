@@ -1,10 +1,10 @@
-export const StringToMs = (time) => {
+export const TimeToMs = (time) => {
 
     let timeParts = time.split(":");
     return (+timeParts[0] * (60000 * 60)) + (+timeParts[1] * 60000);
 }
 
-export const MsToHours = (duration) => {
+export const MsToTime = (duration) => {
     let minutes = Math.floor((duration / (1000 * 60)) % 60);
     let hours = Math.floor((duration / (1000 * 60 * 60)) % 24);
 

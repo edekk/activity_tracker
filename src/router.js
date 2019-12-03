@@ -5,29 +5,29 @@ import {
   Link
 } from "react-router-dom";
 
+import { 
+    Navbar,
+    Nav,
+} from 'react-bootstrap';
+
 import Home from './components/Home/Home';
 import Activities from './components/Activities/Activities';
 import ActivityForm from './components/ActivityForm/ActivityForm';
+import './App.css';
 
 const AppRoutes = (props) => {
     return (
         <Router>
-
-            <div>
-                <nav>
-                    <ul>
-                        <li>
-                            <Link to="/">Home</Link>
-                        </li>
-                        <li>
-                            <Link to="/activities">Activities list</Link>
-                        </li>
-                        <li>
-                            <Link to="/add-activity">Add activity</Link>
-                        </li>
-                    </ul>
-                </nav>
-            </div>
+            <Navbar expand="md" bg="dark" variant="dark">
+                <Link to="/" className="NavbarBrandLink">Activities tracker</Link>
+                <Navbar.Toggle aria-controls="responsive-navbar-nav" />
+                <Navbar.Collapse id="responsive-navbar-nav" className="justify-content-end">
+                    <Nav className="">
+                        <Link className="NavbarLink" to="/activities">Activities list</Link>
+                        <Link className="NavbarLink" to="/add-activity">Add activity</Link>
+                    </Nav>
+                </Navbar.Collapse>
+            </Navbar>
             
             <Route exact path="/">
                 <Home />

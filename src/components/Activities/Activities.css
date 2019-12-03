@@ -1,3 +1,7 @@
 .ActivitiesTable td{
     vertical-align: middle;
+    text-align: center;
+}
+.ActivitiesTable th {
+    text-align: center;
 }

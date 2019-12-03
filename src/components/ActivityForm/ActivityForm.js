@@ -13,7 +13,7 @@ import moment from 'moment';
 import 'rc-time-picker/assets/index.css';
 //
 
-import { StringToMs as Miliseconds } from '../../utilities/TimeConverter';
+import { TimeToMs } from '../../utilities/TimeConverter';
 
 
 const ActivityForm = (props) => {
@@ -32,7 +32,7 @@ const ActivityForm = (props) => {
             }
         }
 
-        if (Miliseconds(newActivity.start) >= Miliseconds(newActivity.end)) {
+        if (TimeToMs(newActivity.start) >= TimeToMs(newActivity.end)) {
             errors += "Activity start time must be before end time\n";
         }
         if (newActivity.description.length < 1) {
@@ -51,7 +51,7 @@ const ActivityForm = (props) => {
     return (
         <Form onSubmit={addActivity}>
             <Form.Group controlId="formActivityDescription">
-                <Form.Label>Activity description</Form.Label>
+                <Form.Label className="font-weight-bold">Activity description</Form.Label>
                 <Form.Control type="text" name="description" placeholder="Enter activity description" />
                 <Form.Text className="text-muted">
                     e.g., Meeting, Project handover
@@ -61,7 +61,7 @@ const ActivityForm = (props) => {
             <Row>
                 <Col>
                     <Form.Group controlId="formActivityStartTime">
-                        <Form.Label>Start time</Form.Label>
+                        <Form.Label className="font-weight-bold mr-2">Start time</Form.Label>
                         <TimePicker 
                             defaultValue={moment()} 
                             showSecond={false}
@@ -70,7 +70,7 @@ const ActivityForm = (props) => {
                 </Col>
                 <Col>
                     <Form.Group controlId="formActivityEndTime">
-                        <Form.Label>End time</Form.Label>
+                        <Form.Label className="font-weight-bold mr-2">End time</Form.Label>
                         <TimePicker 
                         defaultValue={moment()} 
                         showSecond={false}
@@ -79,7 +79,7 @@ const ActivityForm = (props) => {
                 </Col>
             </Row>
 
-            <Button type="submit" name="submit" variant="primary">
+            <Button className="float-right" type="submit" name="submit" variant="primary">
                 Submit
             </Button>
         </Form>

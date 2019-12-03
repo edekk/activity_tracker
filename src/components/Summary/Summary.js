@@ -1,10 +1,9 @@
-import React from 'react';// eslint-disable-next-line
-import { StringToMs, MsToHours } from '../../utilities/TimeConverter'; 
-
-// const isOverlaping = (end, start) => {
-
-// }
-
+import React from 'react';
+import { 
+    Col,
+    Alert
+} from 'react-bootstrap';
+import { TimeToMs, MsToTime } from '../../utilities/TimeConverter'; 
 
 const summary = (props) => {
     const createStartEndArrays = (start, end) => {
@@ -14,9 +13,9 @@ const summary = (props) => {
     let finalArray = [];
 
     const timesArray = [];
-    props.activities.map( (element) => timesArray.push(createStartEndArrays(StringToMs(element.start), StringToMs(element.end))));
+    props.activities.map( (element) => timesArray.push(createStartEndArrays(TimeToMs(element.start), TimeToMs(element.end))));
 
-    const compareIntervals = (a) => {
+    const calculateIntervals = (a) => {
         if (finalArray.length > 0) {
             let toCompareWith = finalArray[finalArray.length - 1];
             if (toCompareWith[1] > a[0]) {
@@ -33,13 +32,21 @@ const summary = (props) => {
         }
     };
 
-    timesArray.map( element => compareIntervals(element))
+    timesArray.map( element => calculateIntervals(element))
 
-    console.log(finalArray);
+    let activityTime = 0;
+
+    for (let element of finalArray) {
+        activityTime += element[1] - element[0];
+    }
+
+    activityTime = MsToTime(activityTime);
+    activityTime = (activityTime.split(':'));
     
     return(
-        <>
-        </>
+        <Col>
+            <Alert variant="success"><h5 className="text-center">Your overall activity time today is {activityTime[0]} hours {activityTime[1]} minutes</h5></Alert>
+        </Col>
     );
 }
 

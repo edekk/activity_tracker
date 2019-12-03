@@ -1,7 +1,8 @@
 import React from 'react';
 import {
     Table,
-    Button
+    Button,
+    Alert
 } from 'react-bootstrap';
 import Summary from '../Summary/Summary';
 import './Activities.css';
@@ -29,37 +30,50 @@ const sortActivities = (activities) => {
 }
 
 const activities = (props) => {
-
-    sortActivities(props.activities);
-    return (
-        <>
-            <Table className="ActivitiesTable">
-                <thead>
-                    <tr>
-                        <th>Description</th>
-                        <th>Start time</th>
-                        <th>End time</th>
-                        <th></th>
-                    </tr>
-                </thead>
-                <tbody>
-                    {
-                        props.activities.map( (el, i) => 
-                        <tr key={i}>
-                            <td>{el.description}</td>
-                            <td>{el.start}</td>
-                            <td>{el.end}</td>
-                            <td><Button onClick={() => removeActivity(i, props.removeActivityHandler)} variant="danger">Remove</Button></td>
+    console.log(props.activities.length)
+    if (props.activities.length === 0) {
+        return(
+            <Alert variant="primary">
+                Feel free to add some activities to your list
+            </Alert>
+        );
+    } else {
+        sortActivities(props.activities);
+        return (
+            <>
+                <Table 
+                    className="ActivitiesTable"
+                    size="sm"
+                    hover={true}
+                    striped={true}
+                    bordered={true}
+                    responsive={true}>
+                    <thead>
+                        <tr>
+                            <th>Start time</th>
+                            <th>End time</th>
+                            <th>Description</th>
+                            <th></th>
                         </tr>
-                        )
-                    }
-                </tbody>
-                
-            </Table>
-            <Summary activities={props.activities} />
-        </>
-    );
-
+                    </thead>
+                    <tbody>
+                        {
+                            props.activities.map( (el, i) => 
+                            <tr key={i}>
+                                <td>{el.start}</td>
+                                <td>{el.end}</td>
+                                <td>{el.description}</td>
+                                <td className="align-right"><Button onClick={() => removeActivity(i, props.removeActivityHandler)} variant="danger">x</Button></td>
+                            </tr>
+                            )
+                        }
+                    </tbody>
+                    
+                </Table>
+                <Summary activities={props.activities} />
+            </>
+        );
+    }
 }
 
 export default activities;

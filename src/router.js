@@ -29,13 +29,19 @@ const AppRoutes = (props) => {
                 </nav>
             </div>
             
-            <Route exact path="/" component={Home}/>
-
-            <Route path="/activities">
-                <Activities activities={props.state.activities}/>
+            <Route exact path="/">
+                <Home />
             </Route>
 
-            <Route path="/add-activity" component={ActivityForm} />
+            <Route path="/activities">
+                <Activities 
+                    activities={props.state.activities}
+                    removeActivityHandler={props.removeActivityHandler}/>
+            </Route>
+
+            <Route path="/add-activity">
+                <ActivityForm addActivityHandler={props.addActivityHandler}/>
+            </Route>
 
         </Router>
     );

@@ -33,7 +33,6 @@ const sortActivities = (activities) => {
 }
 
 const activities = (props) => {
-    console.log(props.activities.length)
     if (props.activities.length === 0) {
         return(
             <Alert variant="primary">

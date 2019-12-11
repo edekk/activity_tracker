@@ -1,44 +1,20 @@
-import React, { Component } from 'react'
+import React, { useReducer } from 'react'
 import AppContext from './context';
-import randomId from './utilities/IdGenerator'
+import rootReducer from './reducer';
 
-class AppProvider extends Component {
+const initialState = {
+    activities: []
+}
 
-    state = {
-        activities: [
-        ],
-        addActivity: (activity) => this.addActivity(activity),
-        removeActivity: (id) => this.removeActivity(id)
-    }
+const AppProvider = (props) => {
+    const { children } = props;
+    const [ state, dispatch ] = useReducer(rootReducer, initialState);
 
-    
-    addActivity = (newActivity) => {
-        this.setState( previousState => ({
-            activities: [...previousState.activities,
-                {
-                    start: newActivity.start,
-                    end: newActivity.end,
-                    description: newActivity.description,
-                    id: randomId()
-                }
-            ]
-        }))
-    }
-
-    removeActivity = (activityIndex) => {
-        const activities = [...this.state.activities];
-        activities.splice(activityIndex, 1);
-        this.setState( { activities: activities} );
-    }
-
-    render() {
-        const { children } = this.props;
-        return(
-            <AppContext.Provider value={{ state: this.state }}>
-                { children }
-            </AppContext.Provider>
-        );
-    }
+    return(
+        <AppContext.Provider value={{ state, dispatch }}>
+            { children }
+        </AppContext.Provider>
+    );
 }
 
 export default AppProvider;

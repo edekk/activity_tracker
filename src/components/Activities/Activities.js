@@ -1,5 +1,6 @@
 import React from 'react';
-import AppContext from '../../context';
+import { useStore } from '../../context';
+
 import {
     Table,
     Button,
@@ -30,57 +31,62 @@ const sortActivities = (activities) => {
 }
 
 const Activities = () => {
-    return (
-        <AppContext.Consumer>
-            { ctx => {
-                if (ctx.state.activities.length === 0) {
-                    return (
-                        <Alert variant="primary">
-                            <p>Your activites list is empty.</p>
-                            <p>Feel free to add some activities to your list.</p>
-                            <Link to="/add-activity"><Button variant="primary">Add activity</Button></Link>
-                        </Alert>
-                    );
-                } else {
-                    sortActivities(ctx.state.activities);
-                    return (
-                        <>
-                            <Table 
-                                className="ActivitiesTable"
-                                size="sm"
-                                hover={true}
-                                striped={true}
-                                bordered={true}
-                                responsive={true}>
-                                <thead>
-                                    <tr>
-                                        <th>Start time</th>
-                                        <th>End time</th>
-                                        <th>Description</th>
-                                        <th></th>
-                                    </tr>
-                                </thead>
-                                <tbody>
-                                    {
-                                        ctx.state.activities.map( (activity, index) => 
-                                            <tr key={activity.id}>
-                                                <td>{activity.start}</td>
-                                                <td>{activity.end}</td>
-                                                <td>{activity.description}</td>
-                                                <td className="align-right"><Button onClick={() => ctx.state.removeActivity(index)} variant="danger">x</Button></td>
-                                            </tr>
-                                        )
-                                    }
-                                </tbody>
-                                
-                            </Table>
-                            <Summary activities={ctx.state.activities} />
-                        </>
-                    );
-                }
-            }}
-        </AppContext.Consumer>
-    );
+    const { state, dispatch } = useStore();
+
+    if (state.activities.length === 0) {
+        return (
+            <Alert variant="primary">
+                <p>Your activites list is empty.</p>
+                <p>Feel free to add some activities to your list.</p>
+                <Link to="/add-activity"><Button variant="primary">Add activity</Button></Link>
+            </Alert>
+        );
+    } else {
+        sortActivities(state.activities);
+        return (
+            <>
+                <Table 
+                    className="ActivitiesTable"
+                    size="sm"
+                    hover={true}
+                    striped={true}
+                    bordered={true}
+                    responsive={true}>
+                    <thead>
+                        <tr>
+                            <th>Start time</th>
+                            <th>End time</th>
+                            <th>Description</th>
+                            <th></th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        {
+                            state.activities.map( (activity, index) => 
+                                <tr key={activity.id}>
+                                    <td>{activity.start}</td>
+                                    <td>{activity.end}</td>
+                                    <td>{activity.description}</td>
+                                    <td className="align-right">
+                                        <Button 
+                                            onClick={() => {
+                                                if (window.confirm("Do you really want to remove this activity?")) { 
+                                                    dispatch({ type: 'REMOVE_ACTIVITY', activityIndex: index})
+                                                }
+                                            } }
+                                            variant="danger">
+                                                x
+                                        </Button>
+                                    </td>
+                                </tr>
+                            )
+                        }
+                    </tbody>
+                </Table>
+                <Summary activities={state.activities} />
+            </>
+        );
+    }
 }
 
 export default Activities;

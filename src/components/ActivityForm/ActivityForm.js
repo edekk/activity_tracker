@@ -1,4 +1,5 @@
 import React from 'react';
+import { useStore } from '../../context';
 
 import { 
     Button,
@@ -15,10 +16,9 @@ import 'rc-time-picker/assets/index.css';
 
 import { TimeToMs } from '../../utilities/TimeConverter';
 
-import AppContext from '../../context';
 
 
-const parseActivity = (event, addActivity) => {
+const parseActivity = (event, dispatch) => {
     let errors = '';
     event.preventDefault();
     
@@ -41,7 +41,7 @@ const parseActivity = (event, addActivity) => {
     if (errors !== '') {
         alert(errors);
     } else {
-        addActivity(newActivity);
+        dispatch({ type: 'ADD_ACTIVITY', newActivity: newActivity})
         event.target.reset();
         alert("Activity has been added!");
     }
@@ -49,50 +49,46 @@ const parseActivity = (event, addActivity) => {
 
 
 const ActivityForm = () => {
+    const { dispatch } = useStore();
     return (
-        <AppContext.Consumer>
-            { ctx => (
-                <Form onSubmit={ (e) => { parseActivity(e, ctx.state.addActivity) } }>
-                    <Form.Group controlId="formActivityDescription">
-                        <Form.Label className="font-weight-bold">Activity description</Form.Label>
-                        <Form.Control type="text" name="description" placeholder="Enter activity description" />
-                        <Form.Text className="text-muted">
-                            e.g., Meeting, Project handover
-                        </Form.Text>
+        <Form onSubmit={ (e) => { parseActivity(e, dispatch) } }>
+            <Form.Group controlId="formActivityDescription">
+                <Form.Label className="font-weight-bold">Activity description</Form.Label>
+                <Form.Control type="text" name="description" placeholder="Enter activity description" />
+                <Form.Text className="text-muted">
+                    e.g., Meeting, Project handover
+                </Form.Text>
+            </Form.Group>
+
+            <Row>
+                <Col>
+                    <Form.Group controlId="formActivityStartTime">
+                        <Form.Label className="font-weight-bold mr-2">Start time</Form.Label>
+                        <TimePicker 
+                            defaultValue={moment()} 
+                            showSecond={false}
+                            name="start"
+                            id="start_id"
+                            autocomplete="off" />
                     </Form.Group>
+                </Col>
+                <Col>
+                    <Form.Group controlId="formActivityEndTime">
+                        <Form.Label className="font-weight-bold mr-2">End time</Form.Label>
+                        <TimePicker 
+                        defaultValue={moment()} 
+                        showSecond={false}
+                        name="end"
+                        id="end_id"
+                        autocomplete="off" />
+                    </Form.Group>
+                </Col>
+            </Row>
 
-                    <Row>
-                        <Col>
-                            <Form.Group controlId="formActivityStartTime">
-                                <Form.Label className="font-weight-bold mr-2">Start time</Form.Label>
-                                <TimePicker 
-                                    defaultValue={moment()} 
-                                    showSecond={false}
-                                    name="start"
-                                    id="start_id"
-                                    autocomplete="off" />
-                            </Form.Group>
-                        </Col>
-                        <Col>
-                            <Form.Group controlId="formActivityEndTime">
-                                <Form.Label className="font-weight-bold mr-2">End time</Form.Label>
-                                <TimePicker 
-                                defaultValue={moment()} 
-                                showSecond={false}
-                                name="end"
-                                id="end_id"
-                                autocomplete="off" />
-                            </Form.Group>
-                        </Col>
-                    </Row>
-
-                    <Button className="float-right" type="submit" name="submit" variant="primary">
-                        Submit
-                    </Button>
-                </Form>
-            )}
-            
-        </AppContext.Consumer>
+            <Button className="float-right" name="submit" type="submit" variant="primary">
+                Submit
+            </Button>
+        </Form>
     );
 }
 

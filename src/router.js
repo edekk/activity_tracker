@@ -10,40 +10,37 @@ import {
     Nav,
 } from 'react-bootstrap';
 
+import AppProvider from './provider';
+
 import Home from './components/Home/Home';
 import Activities from './components/Activities/Activities';
 import ActivityForm from './components/ActivityForm/ActivityForm';
 import './App.css';
 
-const AppRoutes = (props) => {
+
+const AppRoutes = () => {
     return (
-        <Router>
-            <Navbar expand="md" bg="dark" variant="dark">
-                <Link to="/" className="NavbarBrandLink">Activities tracker</Link>
-                <Navbar.Toggle aria-controls="responsive-navbar-nav" />
-                <Navbar.Collapse id="responsive-navbar-nav" className="justify-content-end">
-                    <Nav className="">
-                        <Link className="NavbarLink" to="/activities">Activities list</Link>
-                        <Link className="NavbarLink" to="/add-activity">Add activity</Link>
-                    </Nav>
-                </Navbar.Collapse>
-            </Navbar>
-            
-            <Route exact path="/">
-                <Home />
-            </Route>
+        <AppProvider>
+            <Router>
+                <Navbar expand="md" bg="dark" variant="dark">
+                    <Link to="/" className="NavbarBrandLink">Activities tracker</Link>
+                    <Navbar.Toggle aria-controls="responsive-navbar-nav" />
+                    <Navbar.Collapse id="responsive-navbar-nav" className="justify-content-end">
+                        <Nav className="">
+                            <Link className="NavbarLink" to="/activities">Activities list</Link>
+                            <Link className="NavbarLink" to="/add-activity">Add activity</Link>
+                        </Nav>
+                    </Navbar.Collapse>
+                </Navbar>
+                
+                <Route exact path="/" component={Home} />
 
-            <Route path="/activities">
-                <Activities 
-                    activities={props.state.activities}
-                    removeActivityHandler={props.removeActivityHandler}/>
-            </Route>
+                <Route path="/activities" component={Activities} />
 
-            <Route path="/add-activity">
-                <ActivityForm addActivityHandler={props.addActivityHandler}/>
-            </Route>
+                <Route path="/add-activity" component={ActivityForm} />
 
-        </Router>
+            </Router>
+        </AppProvider>
     );
 }
 

@@ -18,7 +18,7 @@ const removeActivity = (state, activityIndex) => {
     return activities;
 }
 
-export default function rootReducer(state, action) {
+const rootReducer = (state, action) => {
     switch (action.type) {
         case 'ADD_ACTIVITY':
             return {...state, activities: addActivity(state, action.newActivity)}
@@ -28,3 +28,5 @@ export default function rootReducer(state, action) {
             return state
     }
 }
+
+export default rootReducer;
